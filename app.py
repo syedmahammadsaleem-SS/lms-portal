@@ -5,7 +5,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from transformers import pipeline
 
-# ✅ FREE AI MODEL (NO API KEY)
+# ✅ FREE AI MODEL
 chatbot_model = pipeline("text-generation", model="distilgpt2")
 
 app = Flask(__name__)
@@ -124,6 +124,7 @@ def dashboard():
 
     courses = cur.execute("SELECT * FROM courses").fetchall()
 
+    # Ensure uploads folder exists
     if not os.path.exists('static/uploads'):
         os.makedirs('static/uploads')
 
@@ -252,7 +253,7 @@ def certificate(score, total):
     return send_file(file_name, as_attachment=True)
 
 
-# 🤖 FREE AI CHATBOT
+# 🤖 AI CHATBOT
 @app.route('/chatbot', methods=['GET', 'POST'])
 def chatbot():
     response = ""
@@ -270,6 +271,7 @@ def chatbot():
     return render_template('chatbot.html', response=response)
 
 
-# RUN
-if __name__ == '__main__':
-    app.run(debug=True)
+# ================= RUN FOR RENDER =================
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
