@@ -3,10 +3,6 @@ import sqlite3
 from flask import Flask, render_template, request, redirect, session, send_file
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
-from transformers import pipeline
-
-# ✅ FREE AI MODEL
-chatbot_model = pipeline("text-generation", model="distilgpt2")
 
 app = Flask(__name__)
 app.secret_key = "secret123"
@@ -126,7 +122,6 @@ def dashboard():
 
     courses = cur.execute("SELECT * FROM courses").fetchall()
 
-    # Ensure uploads folder exists
     if not os.path.exists('static/uploads'):
         os.makedirs('static/uploads')
 
@@ -255,24 +250,19 @@ def certificate(score, total):
     return send_file(file_name, as_attachment=True)
 
 
-# 🤖 AI CHATBOT
+# 🤖 SIMPLE CHATBOT (LIGHTWEIGHT)
 @app.route('/chatbot', methods=['GET', 'POST'])
 def chatbot():
     response = ""
 
-    if request.method == 'POST':
-        user_input = request.form.get('message')
-
-        try:
-            result = chatbot_model(user_input, max_length=100, num_return_sequences=1)
-            response = result[0]['generated_text']
-        except Exception as e:
-            response = "Error: " + str(e)
+    if request.method == "POST":
+        user_input = request.form.get("message")
+        response = "You said: " + user_input
 
     return render_template('chatbot.html', response=response)
 
 
 # ================= RUN FOR RENDER =================
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
