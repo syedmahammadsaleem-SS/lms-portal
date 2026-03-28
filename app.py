@@ -59,7 +59,9 @@ def create_tables():
     conn.close()
 
 
+# Create DB tables
 create_tables()
+
 
 # ================= ROUTES =================
 
@@ -264,7 +266,6 @@ def chatbot():
         try:
             result = chatbot_model(user_input, max_length=100, num_return_sequences=1)
             response = result[0]['generated_text']
-
         except Exception as e:
             response = "Error: " + str(e)
 
