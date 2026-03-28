@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container mt-5 text-center">
+
+<h2 class="mb-4">Quiz Result 🎯</h2>
+
+<h3>Your Score: {{ score }} / {{ total }}</h3>
+
+<!-- ✅ ADD THIS BUTTON -->
+<a href="/certificate/{{ score }}/{{ total }}" class="btn btn-success mt-4">
+    Download Certificate 📜
+</a>
+
+<br><br>
+
+<a href="/dashboard" class="btn btn-primary">Back to Dashboard</a>
+
+</body>
+</html>
